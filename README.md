@@ -31,6 +31,12 @@ A multi-user desktop banking application built using Java Swing and MySQL databa
 * **Split-Screen Authentication:** Clean corporate brand panel alongside an interactive login/registration form with a live **Show/Hide password toggle**.
 * **Card-Based Dashboard:** Modern aesthetic inspired by top fintech platforms featuring a purple gradient virtual debit card widget, available balance card, and quick-action grid (Deposit, Withdraw, Transfer, Passbook).
 * **Live Activity Feed:** Real-time recent transaction tracking with color-coded credits (green `+`) and debits (red `-`).
+* <img width="961" height="591" alt="Screenshot 2026-10-13 182407" src="https://github.com/user-attachments/assets/b08e23ad-152d-4c50-a086-fdb951327e44" />
+
+<img width="1127" height="802" alt="Screenshot 2026-10-13 182810" src="https://github.com/user-attachments/assets/30473b36-a964-4d32-af4f-458690ccdd5d" />
+<img width="1122" height="808" alt="Screenshot 2026-10-13 182638" src="https://github.com/user-attachments/assets/3f6b3b99-b7a2-41c3-be79-7fffedb5e31f" />
+<img width="1132" height="811" alt="Screenshot 2026-10-13 182605" src="https://github.com/user-attachments/assets/c411444b-52cd-4c88-b79b-f4235c504df3" />
+<img width="1127" height="807" alt="Screenshot 2026-10-13 182543" src="https://github.com/user-attachments/assets/afcc7570-2567-48cd-9d83-e5ad46ebf469" />
 >>>>>>> 1b363fb (feat: complete fintech UI modernization, add transaction history feed and enterprise security)
 
 ---
@@ -73,11 +79,9 @@ private static final String PASSWORD = "YOUR_MYSQL_PASSWORD";
    USE novabank;
 >>>>>>> 1b363fb (feat: complete fintech UI modernization, add transaction history feed and enterprise security)
 ---
-<img width="961" height="591" alt="image" src="https://github.com/user-attachments/assets/16cf59bc-1f5b-4286-8997-ab8d3a97a192" />
-<img width="1127" height="807" alt="image" src="https://github.com/user-attachments/assets/18d5ba59-b41d-4e7b-af89-05caf4737a0b" />
-<img width="1132" height="811" alt="image" src="https://github.com/user-attachments/assets/08c139a3-834e-4402-a7d7-16cd3c9922cb" />
-<img width="1122" height="808" alt="image" src="https://github.com/user-attachments/assets/5cfe5b0c-66ae-41f1-b2d3-df7878f7cedc" />
-<img width="1127" height="802" alt="image" src="https://github.com/user-attachments/assets/e0e8e1fe-514a-4ac1-ac59-73ce28e86b27" />
+======
+
+
 
 
 
