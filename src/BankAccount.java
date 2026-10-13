@@ -90,10 +90,31 @@ public class BankAccount {
         }
     }
 
-    public double getBalance() { return balance; }
-    public double getTotalDeposits() { return totalDeposits; }
-    public double getTotalWithdrawals() { return totalWithdrawals; }
-    public List<Transaction> getTransactions() { return transactions; }
-    public int getAccountId() { return accountId; }
-    public String getAccountNumber() { return accountNumber; }
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public double getTotalDeposits() {
+        return totalDeposits;
+    }
+
+    public double getTotalWithdrawals() {
+        return totalWithdrawals;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public int getAccountId() {
+        return accountId;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
 }

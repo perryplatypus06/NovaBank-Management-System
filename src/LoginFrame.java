@@ -7,6 +7,7 @@ import java.util.Random;
 public class LoginFrame extends JFrame {
     private JTextField txtUsername, txtFullName;
     private JPasswordField txtPassword;
+    private JLabel lblStrengthFeedback;
     private JButton btnLogin, btnRegister, btnToggleMode;
     private JLabel lblTitle, lblFullName;
     private boolean isRegisterMode = false;
@@ -17,40 +18,146 @@ public class LoginFrame extends JFrame {
 
     private void initUI() {
         setTitle("NovaBank - Secure Authentication");
-        setSize(400, 480);
+        setSize(780, 480); // Split-screen width
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBorder(new EmptyBorder(25, 30, 25, 30));
-        mainPanel.setBackground(new Color(245, 247, 250));
+        // Main layout container split into two halves
+        setLayout(new GridLayout(1, 2));
 
-        lblTitle = new JLabel("Welcome to NovaBank", SwingConstants.CENTER);
+        // ==================== LEFT: BRAND PANEL ====================
+        JPanel brandPanel = new JPanel();
+        brandPanel.setLayout(new BoxLayout(brandPanel, BoxLayout.Y_AXIS));
+        brandPanel.setBackground(new Color(21, 101, 192)); // Deep professional blue
+        brandPanel.setBorder(new EmptyBorder(40, 40, 40, 40));
+
+        JLabel lblBrandTitle = new JLabel("NovaBank");
+        lblBrandTitle.setFont(new Font("Segoe UI", Font.BOLD, 28));
+        lblBrandTitle.setForeground(Color.WHITE);
+        lblBrandTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JLabel lblBrandSubtitle = new JLabel("<html>Secure, modern banking with enterprise-grade encryption & protection.</html>");
+        lblBrandSubtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lblBrandSubtitle.setForeground(new Color(224, 224, 224));
+        lblBrandSubtitle.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JLabel lblSecurityBadge = new JLabel("✓ BCrypt Hashed  |  ✓ Brute-Force Protected");
+        lblSecurityBadge.setFont(new Font("Segoe UI", Font.BOLD, 11));
+        lblSecurityBadge.setForeground(new Color(129, 199, 132)); // Soft green
+        lblSecurityBadge.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        brandPanel.add(lblBrandTitle);
+        brandPanel.add(Box.createVerticalStrut(15));
+        brandPanel.add(lblBrandSubtitle);
+        brandPanel.add(Box.createVerticalStrut(30));
+        brandPanel.add(lblSecurityBadge);
+
+        // ==================== RIGHT: FORM PANEL ====================
+        JPanel formPanel = new JPanel();
+        formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
+        formPanel.setBorder(new EmptyBorder(30, 35, 30, 35));
+        formPanel.setBackground(Color.WHITE);
+
+        lblTitle = new JLabel("Welcome Back");
         lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblTitle.setForeground(new Color(33, 33, 33));
+        lblTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         // Full Name Field (Registration Only)
-        lblFullName = new JLabel("Full Name:");
+        lblFullName = new JLabel("Full Name");
         lblFullName.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        lblFullName.setForeground(new Color(100, 100, 100));
         lblFullName.setVisible(false);
 
         txtFullName = new JTextField();
-        txtFullName.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
+        txtFullName.setMaximumSize(new Dimension(Integer.MAX_VALUE, 38));
         txtFullName.setVisible(false);
 
         // Username Field
-        JLabel lblUser = new JLabel("Username:");
+        JLabel lblUser = new JLabel("Username");
         lblUser.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        lblUser.setForeground(new Color(100, 100, 100));
         txtUsername = new JTextField();
-        txtUsername.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
+        txtUsername.setMaximumSize(new Dimension(Integer.MAX_VALUE, 38));
 
-        // Password Field
-        JLabel lblPass = new JLabel("Password:");
+        // Password Field Section with Show/Hide Toggle Button
+        JLabel lblPass = new JLabel("Password");
         lblPass.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        lblPass.setForeground(new Color(100, 100, 100));
+
+        JPanel passwordContainer = new JPanel();
+        passwordContainer.setLayout(new BorderLayout(5, 0));
+        passwordContainer.setMaximumSize(new Dimension(Integer.MAX_VALUE, 38));
+        passwordContainer.setBackground(Color.WHITE);
+        passwordContainer.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         txtPassword = new JPasswordField();
-        txtPassword.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
+        txtPassword.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(200, 200, 200)),
+                BorderFactory.createEmptyBorder(0, 5, 0, 5)
+        ));
+
+        JButton btnToggleVisibility = new JButton("Show");
+        btnToggleVisibility.setFont(new Font("Segoe UI", Font.BOLD, 11));
+        btnToggleVisibility.setForeground(new Color(21, 101, 192));
+        btnToggleVisibility.setBackground(new Color(240, 244, 248));
+        btnToggleVisibility.setFocusPainted(false);
+        btnToggleVisibility.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnToggleVisibility.setPreferredSize(new Dimension(70, 38));
+
+        // Toggle password mask on click
+        final char defaultEchoChar = txtPassword.getEchoChar();
+        btnToggleVisibility.addActionListener(e -> {
+            if (txtPassword.getEchoChar() == 0) {
+                txtPassword.setEchoChar(defaultEchoChar);
+                btnToggleVisibility.setText("Show");
+            } else {
+                txtPassword.setEchoChar((char) 0);
+                btnToggleVisibility.setText("Hide");
+            }
+        });
+
+        passwordContainer.add(txtPassword, BorderLayout.CENTER);
+        passwordContainer.add(btnToggleVisibility, BorderLayout.EAST);
+
+        // Password Strength Feedback Label (Registration Only)
+        lblStrengthFeedback = new JLabel(" ");
+        lblStrengthFeedback.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        lblStrengthFeedback.setAlignmentX(Component.LEFT_ALIGNMENT);
+        lblStrengthFeedback.setVisible(false);
+
+        // Live typing listener for password strength
+        txtPassword.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            private void checkStrength() {
+                if (!isRegisterMode) return;
+                String pwd = new String(txtPassword.getPassword());
+                if (pwd.isEmpty()) {
+                    lblStrengthFeedback.setText(" ");
+                    return;
+                }
+                PasswordValidator.ValidationResult result = PasswordValidator.evaluatePassword(pwd);
+                String category = result.getStrengthCategory();
+
+                if (category.equals("Weak")) {
+                    lblStrengthFeedback.setForeground(new Color(211, 47, 47)); // Red
+                    lblStrengthFeedback.setText("Strength: Weak (Add uppercase, numbers, symbols)");
+                } else if (category.equals("Moderate")) {
+                    lblStrengthFeedback.setForeground(new Color(230, 126, 34)); // Orange
+                    lblStrengthFeedback.setText("Strength: Moderate");
+                } else {
+                    lblStrengthFeedback.setForeground(new Color(46, 125, 50)); // Green
+                    lblStrengthFeedback.setText("Strength: Strong!");
+                }
+            }
+
+            @Override
+            public void insertUpdate(javax.swing.event.DocumentEvent e) { checkStrength(); }
+            @Override
+            public void removeUpdate(javax.swing.event.DocumentEvent e) { checkStrength(); }
+            @Override
+            public void changedUpdate(javax.swing.event.DocumentEvent e) { checkStrength(); }
+        });
 
         // Buttons
         btnLogin = createButton("Login", new Color(21, 101, 192));
@@ -59,38 +166,43 @@ public class LoginFrame extends JFrame {
 
         btnToggleMode = new JButton("Need an account? Register here");
         btnToggleMode.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        btnToggleMode.setForeground(new Color(21, 101, 192));
         btnToggleMode.setContentAreaFilled(false);
         btnToggleMode.setBorderPainted(false);
         btnToggleMode.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnToggleMode.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnToggleMode.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         // Event Handlers
         btnLogin.addActionListener(e -> handleLogin());
         btnRegister.addActionListener(e -> handleRegister());
         btnToggleMode.addActionListener(e -> toggleMode());
 
-        // Assembly
-        mainPanel.add(lblTitle);
-        mainPanel.add(Box.createVerticalStrut(20));
+        // Assembly of Form Panel
+        formPanel.add(lblTitle);
+        formPanel.add(Box.createVerticalStrut(20));
 
-        mainPanel.add(lblFullName);
-        mainPanel.add(txtFullName);
-        mainPanel.add(Box.createVerticalStrut(10));
+        formPanel.add(lblFullName);
+        formPanel.add(txtFullName);
+        formPanel.add(Box.createVerticalStrut(10));
 
-        mainPanel.add(lblUser);
-        mainPanel.add(txtUsername);
-        mainPanel.add(Box.createVerticalStrut(10));
+        formPanel.add(lblUser);
+        formPanel.add(txtUsername);
+        formPanel.add(Box.createVerticalStrut(10));
 
-        mainPanel.add(lblPass);
-        mainPanel.add(txtPassword);
-        mainPanel.add(Box.createVerticalStrut(20));
+        formPanel.add(lblPass);
+        formPanel.add(passwordContainer);
+        formPanel.add(Box.createVerticalStrut(5));
+        formPanel.add(lblStrengthFeedback);
+        formPanel.add(Box.createVerticalStrut(20));
 
-        mainPanel.add(btnLogin);
-        mainPanel.add(btnRegister);
-        mainPanel.add(Box.createVerticalStrut(15));
-        mainPanel.add(btnToggleMode);
+        formPanel.add(btnLogin);
+        formPanel.add(btnRegister);
+        formPanel.add(Box.createVerticalStrut(15));
+        formPanel.add(btnToggleMode);
 
-        add(mainPanel);
+        // Add both halves to the main Frame
+        add(brandPanel);
+        add(formPanel);
     }
 
     private JButton createButton(String text, Color bg) {
@@ -109,6 +221,7 @@ public class LoginFrame extends JFrame {
         lblTitle.setText(isRegisterMode ? "Create New Account" : "Welcome to NovaBank");
         lblFullName.setVisible(isRegisterMode);
         txtFullName.setVisible(isRegisterMode);
+        lblStrengthFeedback.setVisible(isRegisterMode);
         btnLogin.setVisible(!isRegisterMode);
         btnRegister.setVisible(isRegisterMode);
         btnToggleMode.setText(isRegisterMode ? "Already have an account? Login" : "Need an account? Register here");
@@ -125,32 +238,63 @@ public class LoginFrame extends JFrame {
             return;
         }
 
+        // 1. Check if account is temporarily locked out due to repeated failures
+        if (LoginAttemptTracker.isLockedOut(username)) {
+            long remainingSeconds = LoginAttemptTracker.getRemainingLockoutSeconds(username);
+            JOptionPane.showMessageDialog(this,
+                    "Too many failed login attempts.\nPlease try again in " + remainingSeconds + " seconds.",
+                    "Account Temporarily Locked", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         try (Connection con = Database.getConnection()) {
-            String sql = "SELECT u.user_id, u.full_name, a.account_id, a.account_number, a.balance " +
+            String sql = "SELECT u.user_id, u.password, u.full_name, a.account_id, a.account_number, a.balance " +
                     "FROM users u JOIN accounts a ON u.user_id = a.user_id " +
-                    "WHERE u.username = ? AND u.password = ?";
+                    "WHERE u.username = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, username);
-            ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                int accountId = rs.getInt("account_id");
-                String accNum = rs.getString("account_number");
-                double balance = rs.getDouble("balance");
-                String fullName = rs.getString("full_name");
+                String storedHash = rs.getString("password");
 
-                BankAccount account = new BankAccount(accountId, accNum, balance);
+                if (PasswordHasher.verifyPassword(password, storedHash)) {
+                    // Successful login: reset failed attempt counter
+                    LoginAttemptTracker.recordSuccess(username);
 
-                this.dispose();
-                SwingUtilities.invokeLater(() -> {
-                    BankDashboard dashboard = new BankDashboard(account, fullName);
-                    dashboard.setVisible(true);
-                });
+                    // Lazy Migration for legacy plaintext accounts
+                    if (!PasswordHasher.isHashed(storedHash)) {
+                        String newHash = PasswordHasher.hashPassword(password);
+                        String updateSql = "UPDATE users SET password = ? WHERE user_id = ?";
+                        try (PreparedStatement updatePs = con.prepareStatement(updateSql)) {
+                            updatePs.setString(1, newHash);
+                            updatePs.setInt(2, rs.getInt("user_id"));
+                            updatePs.executeUpdate();
+                        }
+                    }
 
-            } else {
-                JOptionPane.showMessageDialog(this, "Invalid Username or Password.", "Authentication Failed", JOptionPane.ERROR_MESSAGE);
+                    int accountId = rs.getInt("account_id");
+                    String accNum = rs.getString("account_number");
+                    double balance = rs.getDouble("balance");
+                    String fullName = rs.getString("full_name");
+
+                    BankAccount account = new BankAccount(accountId, accNum, balance);
+
+                    this.dispose();
+                    SwingUtilities.invokeLater(() -> {
+                        BankDashboard dashboard = new BankDashboard(account, fullName);
+                        dashboard.setVisible(true);
+                    });
+                    return;
+                }
             }
+
+            // Failed login: record attempt for rate limiting
+            LoginAttemptTracker.recordFailure(username);
+
+            // Generic failure message (prevents username enumeration)
+            JOptionPane.showMessageDialog(this, "Invalid Username or Password.", "Authentication Failed", JOptionPane.ERROR_MESSAGE);
+
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -167,14 +311,25 @@ public class LoginFrame extends JFrame {
             return;
         }
 
+        // 1. Evaluate Password Strength before registration
+        PasswordValidator.ValidationResult validationResult = PasswordValidator.evaluatePassword(password);
+        if (!validationResult.isValid()) {
+            String feedback = String.join("\n", validationResult.getFeedbackMessages());
+            JOptionPane.showMessageDialog(this, feedback, "Password Policy Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 2. Hash Password Securely with BCrypt
+        String hashedPassword = PasswordHasher.hashPassword(password);
+
         try (Connection con = Database.getConnection()) {
             con.setAutoCommit(false);
 
-            // 1. Create User
+            // 3. Create User with Hashed Password
             String userSql = "INSERT INTO users (username, password, full_name) VALUES (?, ?, ?)";
             PreparedStatement userPs = con.prepareStatement(userSql, Statement.RETURN_GENERATED_KEYS);
             userPs.setString(1, username);
-            userPs.setString(2, password);
+            userPs.setString(2, hashedPassword);
             userPs.setString(3, fullName);
             userPs.executeUpdate();
 
@@ -183,7 +338,7 @@ public class LoginFrame extends JFrame {
                 int userId = generatedKeys.getInt(1);
                 String accNum = "NB-" + (1000 + new Random().nextInt(9000));
 
-                // 2. Create Account with 0.00 Initial Balance
+                // 4. Create Account with 0.00 Initial Balance
                 String accSql = "INSERT INTO accounts (user_id, account_number, balance) VALUES (?, ?, ?)";
                 PreparedStatement accPs = con.prepareStatement(accSql);
                 accPs.setInt(1, userId);
