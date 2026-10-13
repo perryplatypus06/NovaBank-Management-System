@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # 🏦 NovaBank Management System
 
 A multi-user desktop banking application built using Java Swing and MySQL database storage. Features dynamic UI theme switching, real-time transaction ledger updates, and transactional security.
