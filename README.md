@@ -36,7 +36,7 @@ A multi-user desktop banking application built using Java Swing and MySQL databa
 ---
 
 ## 🛠️ Tech Stack
-<<<<<<< HEAD
+
 
 - **Language**: Java 17+
 - **GUI Framework**: Java Swing
