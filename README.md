@@ -72,3 +72,13 @@ private static final String PASSWORD = "YOUR_MYSQL_PASSWORD";
    CREATE DATABASE novabank;
    USE novabank;
 >>>>>>> 1b363fb (feat: complete fintech UI modernization, add transaction history feed and enterprise security)
+---
+<img width="961" height="591" alt="image" src="https://github.com/user-attachments/assets/16cf59bc-1f5b-4286-8997-ab8d3a97a192" />
+<img width="1127" height="807" alt="image" src="https://github.com/user-attachments/assets/18d5ba59-b41d-4e7b-af89-05caf4737a0b" />
+<img width="1132" height="811" alt="image" src="https://github.com/user-attachments/assets/08c139a3-834e-4402-a7d7-16cd3c9922cb" />
+<img width="1122" height="808" alt="image" src="https://github.com/user-attachments/assets/5cfe5b0c-66ae-41f1-b2d3-df7878f7cedc" />
+<img width="1127" height="802" alt="image" src="https://github.com/user-attachments/assets/e0e8e1fe-514a-4ac1-ac59-73ce28e86b27" />
+
+
+
+
